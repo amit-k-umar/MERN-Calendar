@@ -1,0 +1,17 @@
+.nav{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px;
+    background-color: #022544;
+    color: #ddd;
+}
+.nav-left{
+    position: relative;
+    right: 20%;
+}
+.nav-right{
+    display: flex;
+    position: relative;
+    left: 20%;
+}

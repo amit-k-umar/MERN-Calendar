@@ -1,0 +1,8 @@
+.sidenav{
+    width: 20vw;
+    text-align: center;
+    background-color: #ddd;
+    color: #022544;
+    min-height: 100vh;
+    text-decoration: underline;
+}
