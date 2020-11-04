@@ -18,3 +18,24 @@
     right: 10px;
     top: 6px;
 }
+.signup_title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 100;
+    margin-bottom: 25px;
+}
+.btn{
+    background-color: blue;
+    color: white;
+    margin-top: 10px;
+    border: none;
+    height: 25px;
+    width: 100px;
+}
+.signup_head{
+    font-size: large;
+    margin-top: 10px;
+}
+.signup_input{
+    width: 100%;
+}

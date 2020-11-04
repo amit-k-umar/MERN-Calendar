@@ -34,10 +34,20 @@ function Signup() {
         contentLabel="Example Modal"
       >
         <button onClick={closeModal} className="closeModal">
-          &#x2716;
+        &#x2716;
         </button>
         <form>
-          SignUp
+          <div className="signup_title">Signup</div>
+          <p><i>Please fill in this form to create an account.</i></p>
+          <div>
+          <div className="signup_head">Email Address</div>
+          <input  className="signup_input" type="email" placeholder="Enter Email" required></input>
+          <div className="signup_head">Password</div>
+          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
+          <div className="signup_head">Confirm Password</div>
+          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
+          <button className="btn">Submit</button>
+          </div>
         </form>
       </Modal>
     </div>
