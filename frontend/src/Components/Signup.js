@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import "../CSS/Signup.css";
 
@@ -13,7 +13,6 @@ const customStyles = {
     width:"60vw"
   },
 };
-
 function Signup() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
@@ -22,6 +21,20 @@ function Signup() {
 
   function closeModal() {
     setIsOpen(false);
+  }
+  const [password,setPassword]=useState("")
+  const [confirm_password,setconfirm_password]=useState("")
+  const pass=(e)=>{
+    setPassword(e.target.value);
+  }
+  const confirm_pass=(e)=>{
+    setconfirm_password(e.target.value);
+  }
+  
+  const handlesubmit=()=>{
+  if(password!=confirm_password)
+  alert("Password & Confirm password dont match, Try Again!");
+  else closeModal();
   }
 
   return (
@@ -43,10 +56,10 @@ function Signup() {
           <div className="signup_head">Email Address</div>
           <input  className="signup_input" type="email" placeholder="Enter Email" required></input>
           <div className="signup_head">Password</div>
-          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
+          <input  className="signup_input" type="password" placeholder="Enter Password" minLength="8" onChange={pass} maxLength="20" required></input>
           <div className="signup_head">Confirm Password</div>
-          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
-          <button className="btn">Submit</button>
+          <input  className="signup_input" type="password" placeholder="Enter Password" minLength="8" onChange={confirm_pass} maxLength="20" required></input>
+          <button className="btn" onClick={handlesubmit} >Submit</button>
           </div>
         </form>
       </Modal>
