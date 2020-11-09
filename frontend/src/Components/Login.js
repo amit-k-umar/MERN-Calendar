@@ -40,11 +40,12 @@ function Login() {
           <div className="login_title">Login</div>
           <div>
           <div className="login_head">Email Address</div>
-          <input  className="login_input" type="email" placeholder="Enter Email" required></input>
+          <input  className="login_input" type="email" placeholder="Enter Email"  required></input>
           <div className="login_head">Password</div>
-          <input  className="login_input" type="password" placeholder="Enter Password" required></input>
-          <button className="btn">Submit</button>
-          <div>forgot <a className="link" >password?</a></div>
+
+          <input  className="login_input" type="password" placeholder="Enter Password"  minLength="8" maxLength="20" required></input>
+          <button className="btn" onClick={closeModal}>Submit</button>
+          <div>forgot <a className="link" href="#">password?</a></div>
           </div>
         </form>
       </Modal>
