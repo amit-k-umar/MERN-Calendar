@@ -44,7 +44,7 @@ function Login() {
           <div className="login_head">Password</div>
           <input  className="login_input" type="password" placeholder="Enter Password" required></input>
           <button className="btn">Submit</button>
-          <div>forgot <a className="link" href="#">password?</a></div>
+          <div>forgot <a className="link" >password?</a></div>
           </div>
         </form>
       </Modal>
