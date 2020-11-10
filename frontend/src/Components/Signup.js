@@ -1,4 +1,6 @@
-import React,{useState}from "react";
+
+import React, { useState } from "react";
+
 import Modal from "react-modal";
 import axios from 'axios'
 import "../CSS/Signup.css";
@@ -14,7 +16,6 @@ const customStyles = {
     width:"60vw"
   },
 };
-
 function Signup() {
 
  
@@ -44,6 +45,20 @@ function Signup() {
 
   function closeModal() {
     setIsOpen(false);
+  }
+  const [password,setPassword]=useState("")
+  const [confirm_password,setconfirm_password]=useState("")
+  const pass=(e)=>{
+    setPassword(e.target.value);
+  }
+  const confirm_pass=(e)=>{
+    setconfirm_password(e.target.value);
+  }
+  
+  const handlesubmit=()=>{
+  if(password!=confirm_password)
+  alert("Password & Confirm password dont match, Try Again!");
+  else closeModal();
   }
 
   const pc=(e)=>{
@@ -76,10 +91,12 @@ function Signup() {
           <div className="signup_head">Email Address</div>
           <input  className="signup_input" type="email" placeholder="Enter Email" required onChange={ec}></input>
           <div className="signup_head">Password</div>
-          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
+          <input  className="signup_input" type="password" placeholder="Enter Password" minLength="8" onChange={pass} maxLength="20" required></input>
           <div className="signup_head">Confirm Password</div>
+
           <input  className="signup_input" type="password" placeholder="Enter Password" required onChange={pc}></input>
           <button className="btn" onClick={makePostRequest}>Submit</button>
+
           </div>
         </form>
       </Modal>

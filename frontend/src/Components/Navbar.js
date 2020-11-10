@@ -65,7 +65,7 @@ function showNotification(e) {
 function Navbar() {
     return (
         <div className="nav">
-            <div className="logo nav-left">
+            <div className="nav-left">
                 <h4>LOGO</h4>
             </div>
             <div className="nav-right">
