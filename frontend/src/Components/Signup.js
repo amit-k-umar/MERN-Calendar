@@ -46,20 +46,13 @@ function Signup() {
   function closeModal() {
     setIsOpen(false);
   }
-  const [password,setPassword]=useState("")
-  const [confirm_password,setconfirm_password]=useState("")
+
   const pass=(e)=>{
     setPassword(e.target.value);
   }
-  const confirm_pass=(e)=>{
-    setconfirm_password(e.target.value);
-  }
   
-  const handlesubmit=()=>{
-  if(password!=confirm_password)
-  alert("Password & Confirm password dont match, Try Again!");
-  else closeModal();
-  }
+  
+  
 
   const pc=(e)=>{
     setPassword(e.target.value);
