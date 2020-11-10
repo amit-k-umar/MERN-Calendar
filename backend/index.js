@@ -15,7 +15,7 @@ app.use(cookieParser());
 //database conection
 //const dbURI = 'mongodb+srv://wom:amit@123@merncalender.tpijb.mongodb.net/calender?retryWrites=true&w=majority';
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => {app.listen(3000); })
+  .then((result) => {app.listen(5000); })
  
   .catch((err) => console.log(err));
   
@@ -24,6 +24,7 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
 console.log('kjkkk');
 
 app.get('/',(req,res)=>{
+    res.setHeader('Content-Type', 'application/json')
     res.send('ho gaya conect');
 })
 app.get('/login',(req,res)=>{

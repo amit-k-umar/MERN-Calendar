@@ -3,6 +3,12 @@
     text-align: center;
     background-color: #ddd;
     color: #022544;
-    min-height: 100vh;
+    height: 90vh;
     text-decoration: underline;
 }
+@media only screen and (max-width: 600px) {
+    .sidenav {
+        display: none;
+      background-color: lightblue;
+    }
+  }

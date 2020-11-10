@@ -6,13 +6,13 @@ import Sidenav from "./Sidenav";
 
 function Home() {
   return (
-    <div>
-      <Navbar />
-      <div className="layer2">
-        <Sidenav id="sidebar"/>
+    
+      
+      
+       
         <CalendarBar />
-      </div>
-    </div>
+     
+    
   );
 }
 

@@ -1,4 +1,4 @@
-.react-calendar {
+/* .react-calendar {
     position: absolute;
     top: 25%;
     left: 25%;
@@ -122,4 +122,31 @@
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
-  
+   */
+   .calendarWrapper{
+    
+    height: 90vh;
+    overflow: auto;
+    padding-left: 4em;
+    padding-right: 4em;
+     
+   }
+   .yearlyCalendar>div {
+     display: flex;
+     flex-direction: column;
+   }
+   .yearlyMonth{
+     width: 80%;
+   }
+   .yearlyMonth{
+
+   }
+   #dailyTimeLine{
+     overflow: visible;
+   }
+   @media only screen and (max-width: 600px) {
+    .calendarWrapper {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+  }

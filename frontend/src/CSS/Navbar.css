@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 15px;
+    height: 10vh;
     background-color: #022544;
     color: #ddd;
 }
@@ -12,6 +12,6 @@
 }
 .nav-right{
     display: flex;
-    position: relative;
-    left: 20%;
+    /* position: relative;
+    left: 34%; */
 }

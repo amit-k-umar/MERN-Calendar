@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState}from "react";
 import Modal from "react-modal";
+import axios from 'axios'
 import "../CSS/Signup.css";
 
 const customStyles = {
@@ -15,6 +16,27 @@ const customStyles = {
 };
 
 function Signup() {
+
+ 
+  async function makePostRequest(e) {
+    e.preventDefault()
+    const params = {
+        email,
+        password
+      }
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    //let re=await axios.get('http://localhost:5000/');
+    let re= await fetch(`http://localhost:5000/`)
+    console.log(re);
+
+    let res = await axios.post('http://localhost:5000/signup', {"email":email,"password":password});
+
+    console.log(res.data);
+}
+
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -22,6 +44,17 @@ function Signup() {
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  const pc=(e)=>{
+    setPassword(e.target.value);
+    console.log(e.target.value);
+    console.log(password);
+  }
+  const ec=(e)=>{
+    setEmail(e.target.value);
+    console.log(e.target.value);
+    console.log(email);
   }
 
   return (
@@ -41,12 +74,12 @@ function Signup() {
           <p><i>Please fill in this form to create an account.</i></p>
           <div>
           <div className="signup_head">Email Address</div>
-          <input  className="signup_input" type="email" placeholder="Enter Email" required></input>
+          <input  className="signup_input" type="email" placeholder="Enter Email" required onChange={ec}></input>
           <div className="signup_head">Password</div>
           <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
           <div className="signup_head">Confirm Password</div>
-          <input  className="signup_input" type="password" placeholder="Enter Password" required></input>
-          <button className="btn">Submit</button>
+          <input  className="signup_input" type="password" placeholder="Enter Password" required onChange={pc}></input>
+          <button className="btn" onClick={makePostRequest}>Submit</button>
           </div>
         </form>
       </Modal>
