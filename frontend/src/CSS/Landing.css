@@ -1,0 +1,19 @@
+.landing{
+    background: radial-gradient(#ddd,#022544);
+    height: 100vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.landing .logo img{
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+    width: 30vw;
+}
+
+@media only screen and (max-width: 600px) {
+    .landing{
+        display: none;
+    }
+  }
