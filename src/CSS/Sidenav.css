@@ -1,0 +1,14 @@
+.sidenav{
+    width: 20vw;
+    text-align: center;
+    background-color: #ddd;
+    color: #022544;
+    height: 90vh;
+    text-decoration: underline;
+}
+@media only screen and (max-width: 600px) {
+    .sidenav {
+        display: none;
+      background-color: lightblue;
+    }
+  }
