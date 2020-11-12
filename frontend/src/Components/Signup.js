@@ -1,99 +1,64 @@
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-import React, { useState } from "react";
-
-import Modal from "react-modal";
-import axios from 'axios'
-import "../CSS/Signup.css";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width:"60vw"
-  },
-};
-function Signup() {
-
- 
-  async function makePostRequest(e) {
-    e.preventDefault()
-    const params = {
-        email,
-        password
-      }
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    //let re=await axios.get('http://localhost:5000/');
-    let re= await fetch(`http://localhost:5000/`)
-    console.log(re);
-
-    let res = await axios.post('http://localhost:5000/signup', {"email":email,"password":password});
-
-    console.log(res.data);
-}
-
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const pass=(e)=>{
-    setPassword(e.target.value);
-  }
-  
-  
-  
-
-  const pc=(e)=>{
-    setPassword(e.target.value);
-    console.log(e.target.value);
-    console.log(password);
-  }
-  const ec=(e)=>{
-    setEmail(e.target.value);
-    console.log(e.target.value);
-    console.log(email);
-  }
-
+function Copyright() {
   return (
-    <div className="signup">
-      <button onClick={openModal}>Signup</button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <button onClick={closeModal} className="closeModal">
-        &#x2716;
-        </button>
-        <form>
-          <div className="signup_title">Signup</div>
-          <p><i>Please fill in this form to create an account.</i></p>
-          <div>
-          <div className="signup_head">Email Address</div>
-          <input  className="signup_input" type="email" placeholder="Enter Email" required onChange={ec}></input>
-          <div className="signup_head">Password</div>
-          <input  className="signup_input" type="password" placeholder="Enter Password" minLength="8" onChange={pass} maxLength="20" required></input>
-          <div className="signup_head">Confirm Password</div>
-
-          <input  className="signup_input" type="password" placeholder="Enter Password" required onChange={pc}></input>
-          <button className="btn" onClick={makePostRequest}>Submit</button>
-
-          </div>
-        </form>
-      </Modal>
-    </div>
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
-export default Signup;
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+export default function SignUp() {
+  const classes = useStyles();
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+        </Avatar>
+        
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}

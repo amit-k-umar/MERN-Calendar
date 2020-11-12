@@ -2,20 +2,17 @@ import moment from "moment";
 import React, {Component} from 'react';
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css'
-import {HTML5Backend} from 'react-dnd-html5-backend';
-//import {DragDropContextProvider} from 'react-dnd';
-import { DragDropContext as dragDropContext } from "react-dnd";
 
-import withDragDropContext from '../Context/withDndContext';
+import withDragDropContext from '../context/withDndContext';
 
-class EventCalender extends Component {
+class AppScheduler extends Component {
   constructor(props){
     super(props);
 
     let schedularData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Month);
     schedularData.localeMoment.locale('en');
-    schedularData.setResources(this.props.resources);
-    schedularData.setEvents(this.props.events);
+    schedularData.setResources(DemoData.resources);
+    schedularData.setEvents(DemoData.events);
 
     this.state = {
       viewModel: schedularData
@@ -152,8 +149,8 @@ class EventCalender extends Component {
     const {viewModel} = this.state;
 
     return (
-        
-        
+      <div>
+        <div>
           <Scheduler schedulerData={viewModel}
                      prevClick={this.prevClick}
                      nextClick={this.nextClick}
@@ -174,10 +171,10 @@ class EventCalender extends Component {
                      onScrollBottom={this.onScrollBottom}
                      toggleExpandFunc={this.toggleExpandFunc}
           />
-        
-       
+        </div>
+      </div>
     )
   }
 }
-export default withDragDropContext(EventCalender);
-//export default  dragDropContext(HTML5Backend)(EventCalender);;
+
+export default withDragDropContext(AppScheduler);

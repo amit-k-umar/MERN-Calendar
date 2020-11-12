@@ -11,9 +11,23 @@
     top: 50%;
     width: 30vw;
 }
+.landing {
+    overflow:auto;
+    
+}
 
-@media only screen and (max-width: 600px) {
-    .landing{
+/* .MuiContainer-root{
+    padding-bottom: 10px !important;
+} */
+.makeStyles-paper-1{
+    margin-top: 1em !important;
+}
+
+@media only screen and (max-width: 700px) {
+    .landing .logo{
         display: none;
+    }
+    main{
+        padding-bottom: 1px;
     }
   }

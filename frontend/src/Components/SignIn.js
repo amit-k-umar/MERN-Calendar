@@ -12,6 +12,10 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
   return (
@@ -48,7 +52,122 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [login, setlogin] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [state, setstate] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastName, setLastName] = useState('');
+  const [message_of_sucess, setMessage_of_sucess] = useState('Proceading your request');
+
+
+  //functions
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
+ 
+
+  const toggleLogIn=(e)=>{
+    // e.PreventDefault;
+    
+    return setlogin((previousState)=>!previousState )
+  }
+
+  const signUpHandeler=async (e)=>{
+    
+    const $signInError=document.getElementById('signUpError');
+    e.preventDefault();
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if(firstName.length<1)
+    {
+      setFirstNameError(true)
+      $signInError.innerHTML='First Name is required field'
+      return;
+    }
+    setFirstNameError(false);
+
+    if(reg.test(email) == false ) 
+    {
+        setEmailError(true);
+        $signInError.innerHTML='you have not enterred a valid email'
+        return;
+        
+    }
+    setEmailError(false);
+    if(password.length<6)
+    {
+      setPasswordError(true)
+      $signInError.innerHTML='Password must be greater then 6 char'
+      return;
+    }
+    setPasswordError(false)
+   
+    setOpen(true);
+    await fetch('/signup',
+    {
+      method:"post",
+      headers:{
+          "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+          name:firstName,
+          password,
+          email
+      })
+    }).then(data=>console.log(data.body));
+    setMessage_of_sucess('SignUp sucessed')
+  }
+
+
+  const signInHandeler=(e)=>{
+    const $signInError=document.getElementById('signInError');
+    const $pass=document.getElementById('password');
+    e.preventDefault();
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if(reg.test(email) == false ) 
+    {
+        setEmailError(true);
+        $signInError.innerHTML='you have not enterred a valid email'
+        return;
+        
+    }
+    setEmailError(false);
+    if(password.length<6)
+    { 
+      $pass.setAttribute("helperText", "democlass");
+      setPasswordError(true)
+      
+      $signInError.innerHTML='Password must be greater then 6 char'
+      return;
+    }
+    setPasswordError(false)
+
+    fetch('/signin',
+    {
+      method:"post",
+      headers:{
+          "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+          password,
+          email
+      })
+    }).then(data=>console.log(data.body));
+   
+     
+    
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,8 +177,8 @@ export default function SignIn() {
 
         <Fragment>
           <div className="welcomdiv">
-            <h1 id="weltxt">Welcome to Event Calendar</h1>
-            <h3 id="strtxt">Let's Start By Making a Account</h3>
+            <h2 id="weltxt">Welcome to Event Calendar</h2>
+            
           </div>
           {login ? (
             <div>
@@ -68,6 +187,8 @@ export default function SignIn() {
               </Typography>
               <form className={classes.form} noValidate>
                 <TextField
+                  error={emailError}
+                  value={email}
                   variant="outlined"
                   margin="normal"
                   required
@@ -77,8 +198,11 @@ export default function SignIn() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  onChange={e => setEmail(e.target.value)}
                 />
                 <TextField
+                  error={passwordError}
+                  value={password}
                   variant="outlined"
                   margin="normal"
                   required
@@ -88,12 +212,15 @@ export default function SignIn() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  
+                  onChange={e =>{e.target.helperText="Incorrect entry."; return setPassword(e.target.value)}}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
                 <Button
+                  onClick={signInHandeler}
                   type="button"
                   fullWidth
                   variant="contained"
@@ -110,16 +237,20 @@ export default function SignIn() {
                   </Grid>
                 </Grid>
               </form>
+              <p id="signInError" style={{color:"red"}}></p>
             </div>
           ) : (
             <div>
+              <h3 id="strtxt">Let's Start By Making a Account</h3>
               <Typography component="h1" variant="h5">
                 Sign up
               </Typography>
-              <form className={classes.form} noValidate>
+              <form className={classes.form} noValidate >
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
+                      error={firstNameError}
+                      value={firstName}
                       autoComplete="fname"
                       name="firstName"
                       variant="outlined"
@@ -128,21 +259,25 @@ export default function SignIn() {
                       id="firstName"
                       label="First Name"
                       autoFocus
+                      onChange={e => setFirstName(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
+                      value={lastName}
                       variant="outlined"
-                      required
                       fullWidth
                       id="lastName"
                       label="Last Name"
                       name="lastName"
                       autoComplete="lname"
+                      onChange={e => setLastName(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
+                      error={emailError}
+                      value={email}
                       variant="outlined"
                       required
                       fullWidth
@@ -150,10 +285,13 @@ export default function SignIn() {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      onChange={e => setEmail(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
+                      error={passwordError}
+                      value={password}
                       variant="outlined"
                       required
                       fullWidth
@@ -162,6 +300,7 @@ export default function SignIn() {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      onChange={e => setPassword(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -179,21 +318,28 @@ export default function SignIn() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick={signUpHandeler}
                 >
                   Sign Up
                 </Button>
               </form>
+              <p id="signUpError" style={{color:"red"}}></p>
             </div>
           )}
           <p id="logintxt">
             Alrady have an Account , Want to{" "}
-            <a href="/" onClick={() => setlogin(true)}>
-              Login
+            <a  onClick={toggleLogIn }>
+                    {!login?'Login':'Sing Up'}
             </a>
           </p>
         </Fragment>
       </div>
       <Box mt={8}>{/* <Copyright /> */}</Box>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            {message_of_sucess}
+          </Alert>
+      </Snackbar>
     </Container>
   );
 }

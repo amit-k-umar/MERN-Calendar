@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import '../CSS/LandingMobile.css'
 
 const tutorialSteps = [
   {
@@ -71,10 +72,10 @@ export default function TextMobileStepper() {
   };
 
   return (
-    <div className={classes.root}>
-      <Paper square elevation={0} className={classes.header}>
+    <div className={classes.root+" "+"landingMobile"} >
+      {/* <Paper square elevation={0} className={classes.header}>
         <Typography>{tutorialSteps[activeStep].label}</Typography>
-      </Paper>
+      </Paper> */}
       <img
         className={classes.img}
         src={tutorialSteps[activeStep].imgPath}
