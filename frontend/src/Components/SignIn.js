@@ -163,7 +163,7 @@ export default function SignIn() {
           password,
           email
       })
-    }).then(data=>console.log(data.body));
+    }).then(data=>console.log(data));
    
      
     

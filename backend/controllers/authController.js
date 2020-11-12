@@ -46,14 +46,15 @@ const signToken=(id)=>{
 
 module.exports.signup = async(req, res) => {
 
-  const {email,password}=req.body;
+  const {email,password,name}=req.body;
 
   try{
-    const user= await User.create({email,password});
+    const user= await User.create({email,password,name});
     console.log(user._id)
     const token=await signToken(user._id)
     res.cookie('jwtCAL', token, {httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).send('sing up compleated');
+    user.password=undefined;
+    res.status(201).json(user);
   }catch(err){
     const error= handelError(err);
     console.log(err.message);
@@ -70,7 +71,7 @@ module.exports.login= async (req,res)=>{
        const token=await signToken(user._id)
        res.cookie('jwtCAL', token, { httpOnly: true, maxAge: maxAge * 1000 });
 
-       res.status(201).send('loged in...')
+       res.status(201).json(user)
     }catch(err){
       const error=handelError(err);
       console.log(err.message);

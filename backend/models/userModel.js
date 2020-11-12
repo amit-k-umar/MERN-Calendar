@@ -10,6 +10,10 @@ userSchima=mongoose.Schema({
         validate:[isEmail,'Plese enter a valide email']
 
     },
+    name:{
+        type:String,
+        required:true
+    },
     password:{
         type:String,
         required:[true,'Password in required'],

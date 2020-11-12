@@ -33,7 +33,8 @@ app.get('/login',(req,res)=>{
   res.send('you are redirected as you are not authenticated')
 })
 app.get('/user',requireAuth,(req,res)=>{
-  res.send('you are acessing this becaluse you are authorised');
+  const userData=req.user;
+  res.json(userData);
 })
 app.use(authRoutes);
 

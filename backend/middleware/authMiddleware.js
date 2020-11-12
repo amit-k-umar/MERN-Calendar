@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require("../models/userModel");
+const mongoose= require('mongoose');
+
 require('dotenv').config()
 
 
@@ -8,17 +11,25 @@ require('dotenv').config()
 
     // check json web token exists & is verified
     if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {
           console.log(err.message);
-          res.redirect('/login');
+          res.status(401).json({error:"Not Authorized"});
+          
         } else {
+          const {id} = decodedToken;
+          await User.findById(id).then(userdata=>{
+            userdata.password=undefined;
+            req.user = userdata
+            console.log(userdata);
+            next()
+        }).catch(e=>{res.status(401).json({error:"Not Authorized"});})
           console.log(decodedToken);
           next();
         }
       });
     } else {
-      res.redirect('/login');
+      res.status(401).json({error:"Not Authorized"});
     }
 }
 
