@@ -3,6 +3,8 @@ const mongoose= require('mongoose');
 const authRoutes=require('./routes/authRoutes');
 const cookieParser=require('cookie-parser')
 const {requireAuth}=require('./middleware/authMiddleware')
+const User = require("./models/userModel");
+const GroupModel = require("./models/groupUser");
 require('dotenv').config()
 const app=express();
 
