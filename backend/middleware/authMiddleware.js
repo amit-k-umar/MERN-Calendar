@@ -25,7 +25,7 @@ require('dotenv').config()
             next()
         }).catch(e=>{res.status(401).json({error:"Not Authorized"});})
           console.log(decodedToken);
-          next();
+          
         }
       });
     } else {
