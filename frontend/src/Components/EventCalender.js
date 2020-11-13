@@ -11,8 +11,8 @@ class AppScheduler extends Component {
 
     let schedularData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Month);
     schedularData.localeMoment.locale('en');
-    schedularData.setResources(DemoData.resources);
-    schedularData.setEvents(DemoData.events);
+    schedularData.setResources(this.props.resources);
+    schedularData.setEvents(this.props.events);
 
     this.state = {
       viewModel: schedularData
@@ -21,7 +21,7 @@ class AppScheduler extends Component {
 
   prevClick = (schedulerData)=> {
     schedulerData.prev();
-    schedulerData.setEvents(DemoData.events);
+    schedulerData.setEvents(this.props.events);
     this.setState({
       viewModel: schedulerData
     })
@@ -29,7 +29,7 @@ class AppScheduler extends Component {
 
   nextClick = (schedulerData)=> {
     schedulerData.next();
-    schedulerData.setEvents(DemoData.events);
+    schedulerData.setEvents(this.props.events);
     this.setState({
       viewModel: schedulerData
     })
@@ -37,7 +37,7 @@ class AppScheduler extends Component {
 
   onViewChange = (schedulerData, view) => {
     schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
-    schedulerData.setEvents(DemoData.events);
+    schedulerData.setEvents(this.props.events);
     this.setState({
       viewModel: schedulerData
     })
@@ -45,7 +45,7 @@ class AppScheduler extends Component {
 
   onSelectDate = (schedulerData, date) => {
     schedulerData.setDate(date);
-    schedulerData.setEvents(DemoData.events);
+    schedulerData.setEvents(this.props.events);
     this.setState({
       viewModel: schedulerData
     })
@@ -64,7 +64,7 @@ class AppScheduler extends Component {
   };
 
   newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
-
+      console.log('ha hello');
       let newFreshId = 0;
       schedulerData.events.forEach((item) => {
         if(item.id >= newFreshId)
@@ -109,7 +109,7 @@ class AppScheduler extends Component {
   onScrollRight = (schedulerData, schedulerContent, maxScrollLeft) => {
     if(schedulerData.ViewTypes === ViewTypes.Day) {
       schedulerData.next();
-      schedulerData.setEvents(DemoData.events);
+      schedulerData.setEvents(this.props.events);
       this.setState({
         viewModel: schedulerData
       });
@@ -121,7 +121,7 @@ class AppScheduler extends Component {
   onScrollLeft = (schedulerData, schedulerContent, maxScrollLeft) => {
     if(schedulerData.ViewTypes === ViewTypes.Day) {
       schedulerData.prev();
-      schedulerData.setEvents(DemoData.events);
+      schedulerData.setEvents(this.props.events);
       this.setState({
         viewModel: schedulerData
       });
@@ -161,12 +161,12 @@ class AppScheduler extends Component {
                      viewEventText="Ops 1"
                      viewEvent2Text="Ops 2"
                      viewEvent2Click={this.ops2}
-                     updateEventStart={this.updateEventStart}
-                     updateEventEnd={this.updateEventEnd}
-                     moveEvent={this.moveEvent}
+                    // updateEventStart={this.updateEventStart}
+                    // updateEventEnd={this.updateEventEnd}
+                    //  moveEvent={this.moveEvent}
                      newEvent={this.newEvent}
-                     onScrollLeft={this.onScrollLeft}
-                     onScrollRight={this.onScrollRight}
+                    onScrollLeft={this.onScrollLeft}
+                    onScrollRight={this.onScrollRight}
                      onScrollTop={this.onScrollTop}
                      onScrollBottom={this.onScrollBottom}
                      toggleExpandFunc={this.toggleExpandFunc}

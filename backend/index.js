@@ -1,6 +1,7 @@
 const express= require('express');
 const mongoose= require('mongoose');
 const authRoutes=require('./routes/authRoutes');
+const eventRoutes=require('./routes/eventRoutes')
 const cookieParser=require('cookie-parser')
 const {requireAuth}=require('./middleware/authMiddleware')
 const User = require("./models/userModel");
@@ -24,6 +25,7 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
 
 
 console.log('kjkkk');
+app.use(eventRoutes);
 
 app.get('/',(req,res)=>{
     res.setHeader('Content-Type', 'application/json')
@@ -37,6 +39,7 @@ app.get('/user',requireAuth,(req,res)=>{
   res.json(userData);
 })
 app.use(authRoutes);
+
 
 
 
