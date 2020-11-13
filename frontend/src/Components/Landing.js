@@ -1,9 +1,9 @@
 import React,{useEffect,createContext}  from 'react'
 import {useHistory} from 'react-router-dom'
 import '../CSS/Landing.css'
-import Logo from '../Images/calendar-3-512.png'
+import Logo from '../Images/logo512.png'
 import SignIn from './SignIn'
-import SignUp from './SignUp'
+// import SignUp from './SignUp'
 
 
 function Landing() {
@@ -34,5 +34,3 @@ function Landing() {
 }
 
 export default Landing
-
-

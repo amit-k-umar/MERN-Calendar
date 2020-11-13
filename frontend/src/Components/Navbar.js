@@ -1,40 +1,41 @@
-import React from 'react'
-import Login from './Login'
-import Signup from './Register'
-import "../CSS/Navbar.css"
+import React from "react";
+import Login from "./Login";
+import Signup from "./Register";
+import "../CSS/Navbar.css";
+import logo from "../Images/logo192.png";
+import Sidenav from "./Sidenav";
 
 const createScheduledNotification = async (tag, title, timestamp) => {
   const registration = await navigator.serviceWorker.getRegistration();
   registration.showNotification(title, {
     tag: tag,
     body: "This notification was scheduled 30 seconds ago",
-    showTrigger: new window.TimestampTrigger(timestamp + 30 * 1000)
+    showTrigger: new window.TimestampTrigger(timestamp + 30 * 1000),
   });
 };
 
 function showNotification(e) {
-    createScheduledNotification('hello','hobo',Date.now())
-    e.preventDefault();
-    Notification.requestPermission(function(result) {
-      if (result === 'granted') {
-        if ("showTrigger" in Notification.prototype) {
-          /* Notification Triggers supported */
-          console.log('are ha rre');
-        }
-        navigator.serviceWorker.ready.then(function(registration) {
-          registration.showNotification('Vibration Sample', {
-            body: 'Buzz! Buzz!',
-            tag:'jfld',
-            icon: '../images/touch/chrome-touch-icon-192x192.png',
-            vibrate: [200, 100, 200, 100, 200, 100, 200],
-            tag: 'vibration-sample',
-            // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
-          });
-        });
+  createScheduledNotification("hello", "hobo", Date.now());
+  e.preventDefault();
+  Notification.requestPermission(function (result) {
+    if (result === "granted") {
+      if ("showTrigger" in Notification.prototype) {
+        /* Notification Triggers supported */
+        console.log("are ha rre");
       }
-    });
-  }
-
+      navigator.serviceWorker.ready.then(function (registration) {
+        registration.showNotification("Vibration Sample", {
+          body: "Buzz! Buzz!",
+          tag: "jfld",
+          icon: "../images/touch/chrome-touch-icon-192x192.png",
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: "vibration-sample",
+          // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+        });
+      });
+    }
+  });
+}
 
 // const notifi= async () => {
 //   const reg = await navigator.serviceWorker.getRegistration();
@@ -63,18 +64,19 @@ function showNotification(e) {
 // };
 
 function Navbar() {
-    return (
-        <div className="nav">
-            <div className="nav-left">
-                <h4>LOGO</h4>
-            </div>
-            <div className="nav-right">
-                <Login/>
-                <Signup/>
-                <button onClick={showNotification}>hellp</button>
-            </div>
-        </div>
-    )
+  return (
+    <div className="nav">
+      <div className="nav-left">
+        <img src={logo} />
+      </div>
+        <Sidenav />
+      <div className="nav-right">
+        <Login />
+        {/* <Signup/> */}
+        {/* <button onClick={showNotification}>hellp</button> */}
+      </div>
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;

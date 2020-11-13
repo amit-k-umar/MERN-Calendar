@@ -1,0 +1,39 @@
+.footer{
+    position: absolute;
+    bottom: 0;
+    min-height: 20vh;
+    width: 100%;
+    background-color: #145c4a;
+}
+.footer1{
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 20px;
+}
+.footer1 div img{
+    position: relative;
+    left:5vw;
+    height: 60px;
+}
+.icons{
+    position: absolute;
+    right: 10%;
+    display: flex;
+}
+.icons div{
+    padding-left: 20px;
+    color: #ddd;
+    cursor: pointer;
+}
+.icons div:hover{
+    color: #777; 
+    transition: 0.5s ease-in-out;
+}
+#copyright{
+    color: #ddd;
+    position: relative;
+    bottom: -20px;
+    text-align: center;
+
+}
