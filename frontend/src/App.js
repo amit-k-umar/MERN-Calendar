@@ -5,18 +5,21 @@ import Landing from "./Components/Landing";
 import LandingMobile from "./Components/LandingMobile";
 
 import "./App.css";
+import UserContextProvider from "./context/userContext";
 
 class App extends Component {
   render() {
     return (
+      <UserContextProvider>
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Display} />
-            <Route  exact path="/home" component={Home} />
+            <Route exact path="/landing" component={Display} />
+            <Route  exact path="/" component={Home} />
           </Switch>
         </div>
       </Router>
+      </UserContextProvider>
     );
   }
 }
@@ -24,7 +27,6 @@ const Display = () => {
   return (
     <div>
       <Landing />
-      <LandingMobile />
     </div>
   );
 };

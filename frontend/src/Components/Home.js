@@ -1,12 +1,27 @@
-import React from "react";
+import React,{useEffect,useContext} from "react";
 import "../CSS/Home.css";
 import CalendarBar from "./CalendarBar";
 import EventCalender from "./EventCalender";
 import Navbar from "./Navbar";
 import Sidenav from "./Sidenav";
-
+import {useHistory} from 'react-router-dom'
+import {UserContext} from '../context/userContext'
 
 function Home() {
+ const {setUserData} = useContext(UserContext);
+  const history = useHistory();
+  useEffect(()=>{
+    
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      console.log(user);
+      setUserData(user)
+    }else{
+      history.push('/landing')
+    }
+  },[])
+ 
+
 
   let resources = [
     {

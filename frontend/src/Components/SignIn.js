@@ -17,6 +17,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import MuiAlert from '@material-ui/lab/Alert';
 
+import {useHistory} from 'react-router-dom'
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -51,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+ 
+  const history = useHistory();
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [login, setlogin] = useState(false);
@@ -58,11 +63,12 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
-  const [state, setstate] = useState("");
   const [firstName, setFirstName] = useState('');
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastName, setLastName] = useState('');
-  const [message_of_sucess, setMessage_of_sucess] = useState('Proceading your request');
+  const [message_of_sucess, setMessage_of_sucess] = useState('Signed in Sucessfully');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
 
   //functions
@@ -80,6 +86,10 @@ export default function SignIn() {
 
   const toggleLogIn=(e)=>{
     // e.PreventDefault;
+    setEmailErrorMessage('')
+    setEmailError(false)
+    setPasswordErrorMessage('')
+    setPasswordError(false)
     
     return setlogin((previousState)=>!previousState )
   }
@@ -113,7 +123,7 @@ export default function SignIn() {
     }
     setPasswordError(false)
    
-    setOpen(true);
+    
     await fetch('/signup',
     {
       method:"post",
@@ -125,12 +135,44 @@ export default function SignIn() {
           password,
           email
       })
-    }).then(data=>console.log(data.body));
-    setMessage_of_sucess('SignUp sucessed')
+    }).then(res=>res.json()).then(
+      data=>{
+        if(data.error){
+            setEmailErrorMessage(data.error.email)
+            setEmailError(true)
+            setPasswordErrorMessage(data.error.password)
+            setPasswordError(true)
+            return;
+
+        }
+        setMessage_of_sucess('SignUp sucessed')
+        setOpen(true);
+        localStorage.setItem("user",JSON.stringify(data))
+        Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification('welcome!!!', {
+              body: 'Thank you for joining us',
+              tag:'jfld',
+              icon: '../images/touch/chrome-touch-icon-192x192.png',
+              vibrate: [200, 100, 200, 100, 200, 100, 200],
+              tag: 'vibration-sample',
+              // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+            });
+          });
+        }})
+        history.push('/')
+        
+
+        
+      }
+      
+      );
+    
   }
 
 
-  const signInHandeler=(e)=>{
+  const signInHandeler=async (e)=>{
     const $signInError=document.getElementById('signInError');
     const $pass=document.getElementById('password');
     e.preventDefault();
@@ -153,7 +195,8 @@ export default function SignIn() {
     }
     setPasswordError(false)
 
-    fetch('/signin',
+    
+    await fetch('/signin',
     {
       method:"post",
       headers:{
@@ -163,8 +206,37 @@ export default function SignIn() {
           password,
           email
       })
-    }).then(data=>console.log(data));
-   
+    }).then(res=>res.json()).then(
+      data=>{
+        if(data.error){
+            setEmailErrorMessage(data.error.email)
+            setEmailError(true)
+            setPasswordErrorMessage(data.error.password)
+            setPasswordError(true)
+            return;
+
+        }
+        setMessage_of_sucess('SignIn sucessed')
+        setOpen(true);
+        localStorage.setItem("user",JSON.stringify(data))
+        Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification('welcome!!!', {
+              body: 'Welcome back',
+              tag:'jfld',
+              icon: '../images/touch/chrome-touch-icon-192x192.png',
+              vibrate: [200, 100, 200, 100, 200, 100, 200],
+              tag: 'vibration-sample',
+              // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+            });
+          });
+        }})
+        history.push('/')
+        
+      }
+      
+      );
      
     
   }
@@ -198,6 +270,7 @@ export default function SignIn() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  helperText={emailErrorMessage}
                   onChange={e => setEmail(e.target.value)}
                 />
                 <TextField
@@ -212,6 +285,8 @@ export default function SignIn() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  helperText={passwordErrorMessage}
+                  
                   
                   onChange={e =>{e.target.helperText="Incorrect entry."; return setPassword(e.target.value)}}
                 />
@@ -271,6 +346,7 @@ export default function SignIn() {
                       label="Last Name"
                       name="lastName"
                       autoComplete="lname"
+                      
                       onChange={e => setLastName(e.target.value)}
                     />
                   </Grid>
@@ -285,6 +361,7 @@ export default function SignIn() {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      helperText={emailErrorMessage}
                       onChange={e => setEmail(e.target.value)}
                     />
                   </Grid>
@@ -300,6 +377,7 @@ export default function SignIn() {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      helperText={passwordErrorMessage}
                       onChange={e => setPassword(e.target.value)}
                     />
                   </Grid>
@@ -328,7 +406,7 @@ export default function SignIn() {
           )}
           <p id="logintxt">
             Alrady have an Account , Want to{" "}
-            <a  onClick={toggleLogIn }>
+            <a  onClick={toggleLogIn } style={{'color':'blue'}}>
                     {!login?'Login':'Sing Up'}
             </a>
           </p>
