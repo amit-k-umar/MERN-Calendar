@@ -18,7 +18,7 @@ function Home() {
         console.log(user);
         setUserData(user)
       }else{
-        history.push('/landing')
+        history.push('/')
       }
     },[])
 
