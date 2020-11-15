@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from 'react-big-scheduler';
 import 'react-big-scheduler/lib/css/style.css'
 
-import withDragDropContext from '../Context/withDndContext';
+import withDragDropContext from '../context/withDndContext';
 
 class AppScheduler extends Component {
   constructor(props){
