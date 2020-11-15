@@ -11,8 +11,16 @@ import {
 
 export default function DatePicker() {
   // The first commit of Material-UI
+  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
+  const handleStartDateChange = (date) => {
+    setSelectedStartDate(date);
+  };
+  const handleEndDateChange = (date) => {
+    setSelectedEndDate(date);
+  };
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -23,10 +31,10 @@ export default function DatePicker() {
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
-          label="End Event"
+          label="Start Event"
           format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedStartDate}
+          onChange={handleStartDateChange}
           KeyboardButtonProps={{
             "aria-label": "change date",
           }}
@@ -36,8 +44,8 @@ export default function DatePicker() {
           id="date-picker-dialog"
           label="End Event"
           format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedEndDate}
+          onChange={handleEndDateChange}
           KeyboardButtonProps={{
             "aria-label": "change date",
           }}
