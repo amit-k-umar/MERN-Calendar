@@ -5,7 +5,7 @@ import EventCalender from "./EventCalender";
 import Navbar from "./Navbar";
 import Sidenav from "./Sidenav";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../Context/userContext";
 import Footer from "./Footer";
 
 function Home() {

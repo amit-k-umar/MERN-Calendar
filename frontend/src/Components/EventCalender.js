@@ -1,179 +1,204 @@
 import moment from "moment";
-import React, {Component} from 'react';
-import Scheduler, {SchedulerData, ViewTypes, DATE_FORMAT, DemoData} from 'react-big-scheduler';
-import 'react-big-scheduler/lib/css/style.css'
+import React, { Component } from "react";
+import Scheduler, {
+  SchedulerData,
+  ViewTypes,
+  DATE_FORMAT,
+  DemoData,
+} from "react-big-scheduler";
+import "react-big-scheduler/lib/css/style.css";
 
-import withDragDropContext from '../context/withDndContext';
+import withDragDropContext from "../Context/withDndContext";
 
 class AppScheduler extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    let schedularData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Month);
-    schedularData.localeMoment.locale('en');
+    let schedularData = new SchedulerData(
+      new moment().format("MM/DD/YYYY"),
+      ViewTypes.Month
+    );
+    schedularData.localeMoment.locale("en");
     schedularData.setResources(this.props.resources);
     schedularData.setEvents(this.props.events);
 
     this.state = {
-      viewModel: schedularData
-    }
+      viewModel: schedularData,
+    };
   }
 
-  prevClick = (schedulerData)=> {
+  prevClick = (schedulerData) => {
     schedulerData.prev();
     schedulerData.setEvents(this.props.events);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
-  nextClick = (schedulerData)=> {
+  nextClick = (schedulerData) => {
     schedulerData.next();
     schedulerData.setEvents(this.props.events);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
   onViewChange = (schedulerData, view) => {
-    schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
+    schedulerData.setViewType(
+      view.viewType,
+      view.showAgenda,
+      view.isEventPerspective
+    );
     schedulerData.setEvents(this.props.events);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
   onSelectDate = (schedulerData, date) => {
     schedulerData.setDate(date);
     schedulerData.setEvents(this.props.events);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
   eventClicked = (schedulerData, event) => {
-    alert(`You just clicked an event: {id: ${event.id}, title: ${event.title}}`);
+    alert(
+      `You just clicked an event: {id: ${event.id}, title: ${event.title}}`
+    );
   };
 
   ops1 = (schedulerData, event) => {
-    alert(`You just executed ops1 to event: {id: ${event.id}, title: ${event.title}}`);
+    alert(
+      `You just executed ops1 to event: {id: ${event.id}, title: ${event.title}}`
+    );
   };
 
   ops2 = (schedulerData, event) => {
-    alert(`You just executed ops2 to event: {id: ${event.id}, title: ${event.title}}`);
+    alert(
+      `You just executed ops2 to event: {id: ${event.id}, title: ${event.title}}`
+    );
   };
 
   newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
-      console.log('ha hello');
-      let newFreshId = 0;
-      schedulerData.events.forEach((item) => {
-        if(item.id >= newFreshId)
-          newFreshId = item.id + 1;
-      });
+    console.log("ha hello");
+    let newFreshId = 0;
+    schedulerData.events.forEach((item) => {
+      if (item.id >= newFreshId) newFreshId = item.id + 1;
+    });
 
-      let newEvent = {
-        id: newFreshId,
-        title: 'New event you just created',
-        start: start,
-        end: end,
-        resourceId: slotId,
-        bgColor: 'purple'
-      }
-      schedulerData.addEvent(newEvent);
-      this.setState({
-        viewModel: schedulerData
-      })
-  }
+    let newEvent = {
+      id: newFreshId,
+      title: "New event you just created",
+      start: start,
+      end: end,
+      resourceId: slotId,
+      bgColor: "purple",
+    };
+    schedulerData.addEvent(newEvent);
+    this.setState({
+      viewModel: schedulerData,
+    });
+  };
 
   updateEventStart = (schedulerData, event, newStart) => {
-      schedulerData.updateEventStart(event, newStart);
+    schedulerData.updateEventStart(event, newStart);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
   updateEventEnd = (schedulerData, event, newEnd) => {
-      schedulerData.updateEventEnd(event, newEnd);
+    schedulerData.updateEventEnd(event, newEnd);
     this.setState({
-      viewModel: schedulerData
-    })
-  }
+      viewModel: schedulerData,
+    });
+  };
 
   moveEvent = (schedulerData, event, slotId, slotName, start, end) => {
-      schedulerData.moveEvent(event, slotId, slotName, start, end);
-      this.setState({
-        viewModel: schedulerData
-      })
-  }
+    schedulerData.moveEvent(event, slotId, slotName, start, end);
+    this.setState({
+      viewModel: schedulerData,
+    });
+  };
 
   onScrollRight = (schedulerData, schedulerContent, maxScrollLeft) => {
-    if(schedulerData.ViewTypes === ViewTypes.Day) {
+    if (schedulerData.ViewTypes === ViewTypes.Day) {
       schedulerData.next();
       schedulerData.setEvents(this.props.events);
       this.setState({
-        viewModel: schedulerData
+        viewModel: schedulerData,
       });
 
       schedulerContent.scrollLeft = maxScrollLeft - 10;
     }
-  }
+  };
 
   onScrollLeft = (schedulerData, schedulerContent, maxScrollLeft) => {
-    if(schedulerData.ViewTypes === ViewTypes.Day) {
+    if (schedulerData.ViewTypes === ViewTypes.Day) {
       schedulerData.prev();
       schedulerData.setEvents(this.props.events);
       this.setState({
-        viewModel: schedulerData
+        viewModel: schedulerData,
       });
 
       schedulerContent.scrollLeft = 10;
     }
-  }
+  };
 
   onScrollTop = (schedulerData, schedulerContent, maxScrollTop) => {
-    console.log('onScrollTop');
-  }
+    console.log("onScrollTop");
+  };
 
   onScrollBottom = (schedulerData, schedulerContent, maxScrollTop) => {
-    console.log('onScrollBottom');
-  }
+    console.log("onScrollBottom");
+  };
 
   toggleExpandFunc = (schedulerData, slotId) => {
     schedulerData.toggleExpandStatus(slotId);
     this.setState({
-      viewModel: schedulerData
+      viewModel: schedulerData,
     });
-  }
+  };
 
   render() {
-    const {viewModel} = this.state;
+    const { viewModel } = this.state;
+    const today = this.state.currentDate;
+    const day = moment(today).format("dddd");
+    const date = moment(today).format("MM/DD/YYYY , hh:mm:ss");
+    const date2 = moment(today).format(DATE_FORMAT)
+
+    console.log(date)
+    console.log(date2)
 
     return (
       <div>
         <div>
-          <Scheduler schedulerData={viewModel}
-                     prevClick={this.prevClick}
-                     nextClick={this.nextClick}
-                     onSelectDate={this.onSelectDate}
-                     onViewChange={this.onViewChange}
-                     eventItemClick={this.eventClicked}
-                     viewEventClick={this.ops1}
-                     viewEventText="Ops 1"
-                     viewEvent2Text="Ops 2"
-                     viewEvent2Click={this.ops2}
-                    // updateEventStart={this.updateEventStart}
-                    // updateEventEnd={this.updateEventEnd}
-                    //  moveEvent={this.moveEvent}
-                     newEvent={this.newEvent}
-                    onScrollLeft={this.onScrollLeft}
-                    onScrollRight={this.onScrollRight}
-                     onScrollTop={this.onScrollTop}
-                     onScrollBottom={this.onScrollBottom}
-                     toggleExpandFunc={this.toggleExpandFunc}
+          <Scheduler
+            schedulerData={viewModel}
+            prevClick={this.prevClick}
+            nextClick={this.nextClick}
+            onSelectDate={this.onSelectDate}
+            onViewChange={this.onViewChange}
+            eventItemClick={this.eventClicked}
+            viewEventClick={this.ops1}
+            viewEventText="Ops 1"
+            viewEvent2Text="Ops 2"
+            viewEvent2Click={this.ops2}
+            // updateEventStart={this.updateEventStart}
+            // updateEventEnd={this.updateEventEnd}
+            //  moveEvent={this.moveEvent}
+            newEvent={this.newEvent}
+            onScrollLeft={this.onScrollLeft}
+            onScrollRight={this.onScrollRight}
+            onScrollTop={this.onScrollTop}
+            onScrollBottom={this.onScrollBottom}
+            toggleExpandFunc={this.toggleExpandFunc}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
