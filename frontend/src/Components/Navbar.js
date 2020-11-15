@@ -4,9 +4,14 @@ import Signup from "./Register";
 import "../CSS/Navbar.css";
 import logo from "../Images/logo192 copy.png";
 import Sidenav from "./Sidenav";
+
+import {useHistory} from 'react-router-dom'
+
+
 import { BiExit, BiSearch } from "react-icons/bi";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+
 
 const createScheduledNotification = async (tag, title, timestamp) => {
   const registration = await navigator.serviceWorker.getRegistration();
@@ -66,7 +71,31 @@ function showNotification(e) {
 //   });
 // };
 
+
+
 function Navbar() {
+  const history = useHistory();
+  async function  handelLogout (e) {
+  
+     fetch('http://localhost:5000/logout',
+        {
+              method:"get",
+              headers:{
+              credentials: 'include',
+              "Content-Type":"application/json"
+              },
+           
+          }).then(
+            async data=>{
+               localStorage.removeItem("user");
+              return history.push('/landing')
+  
+                  })
+              
+                }
+
+  // const handelLogout= async(e)=>(
+   
   return (
     <div className="nav">
       <div className="nav-left">
@@ -91,7 +120,10 @@ function Navbar() {
       <Sidenav />
 
       <div className="nav-right">
-        <BiExit style={{ fontSize: "25px", cursor: "pointer" }} />
+
+
+        <BiExit style={{ fontSize: "25px", cursor: "pointer" }} onClick={handelLogout} />
+
       </div>
     </div>
   );

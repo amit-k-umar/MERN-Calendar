@@ -115,7 +115,10 @@ export default function SignIn() {
       $signInError.innerHTML = "Password must be greater then 6 char";
       return;
     }
+
+
     setPasswordError(false);
+
 
     await fetch("/signup", {
       method: "post",
@@ -178,10 +181,15 @@ export default function SignIn() {
     }
     setPasswordError(false);
 
-    await fetch("/signin", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
+
+    
+    await fetch('http://localhost:5000/signin',
+    {
+      method:"post",
+      headers:{
+          credentials: 'include',
+          "Content-Type":"application/json"
+
       },
       body: JSON.stringify({
         password,
