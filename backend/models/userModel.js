@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
 const {isEmail}=require('validator')
+const {ObjectId} = mongoose.Schema.Types;
 const bcrypt=require('bcrypt')
 userSchima=mongoose.Schema({
     email:{
@@ -8,7 +9,6 @@ userSchima=mongoose.Schema({
         unique:true,
         lowercase:true,
         validate:[isEmail,'Plese enter a valide email']
-
     },
     name:{
         type:String,
@@ -18,7 +18,11 @@ userSchima=mongoose.Schema({
         type:String,
         required:[true,'Password in required'],
         minlength:[6,'Length of password must be greater than 6']
-    }
+    },
+    group:[{
+        type:ObjectId,
+        ref:"Group"
+    }]
 });
 userSchima.pre('save',async function (next){
     const salt= await bcrypt.genSalt();
@@ -35,6 +39,12 @@ userSchima.statics.login=async function(email,password){
     if(!auth)
     throw Error('Wrong password')
     return user
+}
+
+userSchima.method.addGroup=async function(groupId,callback){
+    var group = this.group;
+    group.push(group);
+    this.save(callback);
 }
 const User=mongoose.model('user',userSchima);
 

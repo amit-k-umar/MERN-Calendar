@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const {ObjectId} = mongoose.Schema.Types;
-eventSchima=mongoose.Schema({
+const eventSchima=mongoose.Schema({
    description:{
        type:String
    },

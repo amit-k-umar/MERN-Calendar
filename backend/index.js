@@ -5,7 +5,8 @@ const eventRoutes=require('./routes/eventRoutes')
 const cookieParser=require('cookie-parser')
 const {requireAuth}=require('./middleware/authMiddleware')
 const User = require("./models/userModel");
-const GroupModel = require("./models/groupUser");
+const groupRouter = require('./routes/groupRoute');
+// const GroupModel = require("./models/groupModel");
 require('dotenv').config()
 const app=express();
 
@@ -26,6 +27,7 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
 
 console.log('kjkkk');
 app.use(eventRoutes);
+app.use(groupRouter);
 
 app.get('/',(req,res)=>{
     res.setHeader('Content-Type', 'application/json')

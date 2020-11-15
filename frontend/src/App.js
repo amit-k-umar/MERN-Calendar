@@ -5,7 +5,8 @@ import Landing from "./Components/Landing";
 import LandingMobile from "./Components/LandingMobile";
 
 import "./App.css";
-import UserContextProvider from "./Context/userContext";
+
+import UserContextProvider from "./context/userContext";
 
 class App extends Component {
   render() {
