@@ -2,8 +2,11 @@ import React from "react";
 import Login from "./Login";
 import Signup from "./Register";
 import "../CSS/Navbar.css";
-import logo from "../Images/logo192.png";
+import logo from "../Images/logo192 copy.png";
 import Sidenav from "./Sidenav";
+import { BiExit, BiSearch } from "react-icons/bi";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const createScheduledNotification = async (tag, title, timestamp) => {
   const registration = await navigator.serviceWorker.getRegistration();
@@ -69,11 +72,26 @@ function Navbar() {
       <div className="nav-left">
         <img src={logo} />
       </div>
-        <Sidenav />
+      {/* <div className="search">
+        <form>
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="fname" />
+        </form>
+        <div className="search-btn">
+          <BiSearch />
+        </div>
+      </div> */}
+
+      {/* <form>
+        <label for="fname">First Name</label>
+        <label>
+          <input type="text" id="fname" name="fname" />
+        </label>
+      </form> */}
+      <Sidenav />
+
       <div className="nav-right">
-        <Login />
-        {/* <Signup/> */}
-        {/* <button onClick={showNotification}>hellp</button> */}
+        <BiExit style={{ fontSize: "25px", cursor: "pointer" }} />
       </div>
     </div>
   );

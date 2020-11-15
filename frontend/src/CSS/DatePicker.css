@@ -3,3 +3,12 @@
     flex-direction: column;
     margin-top: 40px;
 }
+.btnDatePicker{
+    width: 200px;
+    background-color: #01283f;
+    color: #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 5vh;
+    cursor: pointer;
+}

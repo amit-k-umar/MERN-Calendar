@@ -5,7 +5,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import EmailIcon from "@material-ui/icons/Email";
-import logo from "../Images/logo192.png";
+import logo from "../Images/logo192 copy.png";
 
 function Footer() {
   return (
@@ -33,7 +33,7 @@ function Footer() {
         </div>
       </div>
       <div id="copyright">
-        <p><b>Copyright&#169;</b>-GAZIO 2020</p>
+        <p><b>Copyright &#169;</b>-GAZIO 2020</p>
       </div>
     </div>
   );

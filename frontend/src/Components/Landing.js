@@ -1,7 +1,7 @@
 import React,{useEffect,createContext}  from 'react'
 import {useHistory} from 'react-router-dom'
 import '../CSS/Landing.css'
-import Logo from '../Images/logo512.png'
+import Logo from '../Images/logo512 copy.png'
 import SignIn from './SignIn'
 // import SignUp from './SignUp'
 

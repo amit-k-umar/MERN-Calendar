@@ -94,7 +94,7 @@ class AppScheduler extends Component {
       start: start,
       end: end,
       resourceId: slotId,
-      bgColor: "purple",
+      bgColor: "#035b8f",
     };
     schedulerData.addEvent(newEvent);
     this.setState({
@@ -164,13 +164,6 @@ class AppScheduler extends Component {
 
   render() {
     const { viewModel } = this.state;
-    const today = this.state.currentDate;
-    const day = moment(today).format("dddd");
-    const date = moment(today).format("MM/DD/YYYY , hh:mm:ss");
-    const date2 = moment(today).format(DATE_FORMAT)
-
-    console.log(date)
-    console.log(date2)
 
     return (
       <div>

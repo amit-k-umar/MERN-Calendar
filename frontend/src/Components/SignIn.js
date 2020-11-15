@@ -12,12 +12,12 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import MuiAlert from "@material-ui/lab/Alert";
 
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
- 
   const history = useHistory();
 
   const classes = useStyles();
@@ -61,15 +60,16 @@ export default function SignIn() {
   const [login, setlogin] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState("");
   const [firstNameError, setFirstNameError] = useState(false);
-  const [lastName, setLastName] = useState('');
-  const [message_of_sucess, setMessage_of_sucess] = useState('Signed in Sucessfully');
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-
+  const [lastName, setLastName] = useState("");
+  const [message_of_sucess, setMessage_of_sucess] = useState(
+    "Signed in Sucessfully"
+  );
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   //functions
 
@@ -77,169 +77,146 @@ export default function SignIn() {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
-  }
- 
+  };
 
-  const toggleLogIn=(e)=>{
+  const toggleLogIn = (e) => {
     // e.PreventDefault;
-    setEmailErrorMessage('')
-    setEmailError(false)
-    setPasswordErrorMessage('')
-    setPasswordError(false)
-    
-    return setlogin((previousState)=>!previousState )
-  }
+    setEmailErrorMessage("");
+    setEmailError(false);
+    setPasswordErrorMessage("");
+    setPasswordError(false);
 
-  const signUpHandeler=async (e)=>{
-    
-    const $signInError=document.getElementById('signUpError');
+    return setlogin((previousState) => !previousState);
+  };
+
+  const signUpHandeler = async (e) => {
+    const $signInError = document.getElementById("signUpError");
     e.preventDefault();
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    if(firstName.length<1)
-    {
-      setFirstNameError(true)
-      $signInError.innerHTML='First Name is required field'
+    if (firstName.length < 1) {
+      setFirstNameError(true);
+      $signInError.innerHTML = "First Name is required field";
       return;
     }
     setFirstNameError(false);
 
-    if(reg.test(email) == false ) 
-    {
-        setEmailError(true);
-        $signInError.innerHTML='you have not enterred a valid email'
-        return;
-        
-    }
-    setEmailError(false);
-    if(password.length<6)
-    {
-      setPasswordError(true)
-      $signInError.innerHTML='Password must be greater then 6 char'
+    if (reg.test(email) == false) {
+      setEmailError(true);
+      $signInError.innerHTML = "you have not enterred a valid email";
       return;
     }
-    setPasswordError(false)
-   
-    
-    await fetch('/signup',
-    {
-      method:"post",
-      headers:{
-          "Content-Type":"application/json"
+    setEmailError(false);
+    if (password.length < 6) {
+      setPasswordError(true);
+      $signInError.innerHTML = "Password must be greater then 6 char";
+      return;
+    }
+    setPasswordError(false);
+
+    await fetch("/signup", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({
-          name:firstName,
-          password,
-          email
-      })
-    }).then(res=>res.json()).then(
-      data=>{
-        if(data.error){
-            setEmailErrorMessage(data.error.email)
-            setEmailError(true)
-            setPasswordErrorMessage(data.error.password)
-            setPasswordError(true)
-            return;
-
+      body: JSON.stringify({
+        name: firstName,
+        password,
+        email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          setEmailErrorMessage(data.error.email);
+          setEmailError(true);
+          setPasswordErrorMessage(data.error.password);
+          setPasswordError(true);
+          return;
         }
-        setMessage_of_sucess('SignUp sucessed')
+        setMessage_of_sucess("SignUp sucessed");
         setOpen(true);
-        localStorage.setItem("user",JSON.stringify(data))
-        Notification.requestPermission(function(result) {
-        if (result === 'granted') {
-          navigator.serviceWorker.ready.then(function(registration) {
-            registration.showNotification('welcome!!!', {
-              body: 'Thank you for joining us',
-              tag:'jfld',
-              icon: '../images/touch/chrome-touch-icon-192x192.png',
-              vibrate: [200, 100, 200, 100, 200, 100, 200],
-              tag: 'vibration-sample',
-              // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+        localStorage.setItem("user", JSON.stringify(data));
+        Notification.requestPermission(function (result) {
+          if (result === "granted") {
+            navigator.serviceWorker.ready.then(function (registration) {
+              registration.showNotification("welcome!!!", {
+                body: "Thank you for joining us",
+                tag: "jfld",
+                icon: "../images/touch/chrome-touch-icon-192x192.png",
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: "vibration-sample",
+                // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+              });
             });
-          });
-        }})
-        history.push('/')
-        
+          }
+        });
+        history.push("/");
+      });
+  };
 
-        
-      }
-      
-      );
-    
-  }
-
-
-  const signInHandeler=async (e)=>{
-    const $signInError=document.getElementById('signInError');
-    const $pass=document.getElementById('password');
+  const signInHandeler = async (e) => {
+    const $signInError = document.getElementById("signInError");
+    const $pass = document.getElementById("password");
     e.preventDefault();
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    if(reg.test(email) == false ) 
-    {
-        setEmailError(true);
-        $signInError.innerHTML='you have not enterred a valid email'
-        return;
-        
-    }
-    setEmailError(false);
-    if(password.length<6)
-    { 
-      $pass.setAttribute("helperText", "democlass");
-      setPasswordError(true)
-      
-      $signInError.innerHTML='Password must be greater then 6 char'
+    if (reg.test(email) == false) {
+      setEmailError(true);
+      $signInError.innerHTML = "you have not enterred a valid email";
       return;
     }
-    setPasswordError(false)
+    setEmailError(false);
+    if (password.length < 6) {
+      $pass.setAttribute("helperText", "democlass");
+      setPasswordError(true);
 
-    
-    await fetch('/signin',
-    {
-      method:"post",
-      headers:{
-          "Content-Type":"application/json"
+      $signInError.innerHTML = "Password must be greater then 6 char";
+      return;
+    }
+    setPasswordError(false);
+
+    await fetch("/signin", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({
-          password,
-          email
-      })
-    }).then(res=>res.json()).then(
-      data=>{
-        if(data.error){
-            setEmailErrorMessage(data.error.email)
-            setEmailError(true)
-            setPasswordErrorMessage(data.error.password)
-            setPasswordError(true)
-            return;
-
+      body: JSON.stringify({
+        password,
+        email,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          setEmailErrorMessage(data.error.email);
+          setEmailError(true);
+          setPasswordErrorMessage(data.error.password);
+          setPasswordError(true);
+          return;
         }
-        setMessage_of_sucess('SignIn sucessed')
+        setMessage_of_sucess("SignIn sucessed");
         setOpen(true);
-        localStorage.setItem("user",JSON.stringify(data))
-        Notification.requestPermission(function(result) {
-        if (result === 'granted') {
-          navigator.serviceWorker.ready.then(function(registration) {
-            registration.showNotification('welcome!!!', {
-              body: 'Welcome back',
-              tag:'jfld',
-              icon: '../images/touch/chrome-touch-icon-192x192.png',
-              vibrate: [200, 100, 200, 100, 200, 100, 200],
-              tag: 'vibration-sample',
-              // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+        localStorage.setItem("user", JSON.stringify(data));
+        Notification.requestPermission(function (result) {
+          if (result === "granted") {
+            navigator.serviceWorker.ready.then(function (registration) {
+              registration.showNotification("welcome!!!", {
+                body: "Welcome back",
+                tag: "jfld",
+                icon: "../images/touch/chrome-touch-icon-192x192.png",
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: "vibration-sample",
+                // showTrigger: new TimestampTrigger(timestamp + 30 * 1000)
+              });
             });
-          });
-        }})
-        history.push('/')
-        
-      }
-      
-      );
-     
-    
-  }
+          }
+        });
+        history.push("/");
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -249,8 +226,7 @@ export default function SignIn() {
 
         <Fragment>
           <div className="welcomdiv">
-            <h2 id="weltxt">Welcome to Event Calendar</h2>
-            
+            <h2 id="weltxt">Welcome to Add Event Calendar</h2>
           </div>
           {login ? (
             <div>
@@ -271,7 +247,7 @@ export default function SignIn() {
                   autoComplete="email"
                   autoFocus
                   helperText={emailErrorMessage}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                   error={passwordError}
@@ -286,9 +262,10 @@ export default function SignIn() {
                   id="password"
                   autoComplete="current-password"
                   helperText={passwordErrorMessage}
-                  
-                  
-                  onChange={e =>{e.target.helperText="Incorrect entry."; return setPassword(e.target.value)}}
+                  onChange={(e) => {
+                    e.target.helperText = "Incorrect entry.";
+                    return setPassword(e.target.value);
+                  }}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
@@ -312,7 +289,7 @@ export default function SignIn() {
                   </Grid>
                 </Grid>
               </form>
-              <p id="signInError" style={{color:"red"}}></p>
+              <p id="signInError" style={{ color: "red" }}></p>
             </div>
           ) : (
             <div>
@@ -320,7 +297,7 @@ export default function SignIn() {
               <Typography component="h1" variant="h5">
                 Sign up
               </Typography>
-              <form className={classes.form} noValidate >
+              <form className={classes.form} noValidate>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -334,7 +311,7 @@ export default function SignIn() {
                       id="firstName"
                       label="First Name"
                       autoFocus
-                      onChange={e => setFirstName(e.target.value)}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -346,8 +323,7 @@ export default function SignIn() {
                       label="Last Name"
                       name="lastName"
                       autoComplete="lname"
-                      
-                      onChange={e => setLastName(e.target.value)}
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -362,7 +338,7 @@ export default function SignIn() {
                       name="email"
                       autoComplete="email"
                       helperText={emailErrorMessage}
-                      onChange={e => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -378,7 +354,7 @@ export default function SignIn() {
                       id="password"
                       autoComplete="current-password"
                       helperText={passwordErrorMessage}
-                      onChange={e => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -401,22 +377,22 @@ export default function SignIn() {
                   Sign Up
                 </Button>
               </form>
-              <p id="signUpError" style={{color:"red"}}></p>
+              <p id="signUpError" style={{ color: "red" }}></p>
             </div>
           )}
-          <p id="logintxt">
-            Alrady have an Account , Want to{" "}
-            <a  onClick={toggleLogIn } style={{'color':'blue'}}>
-                    {!login?'Login':'Sing Up'}
-            </a>
-          </p>
+
+          <a onClick={toggleLogIn} style={{ color: "#222", cursor: "pointer" }}>
+            {!login
+              ? "Already have an account? Login directly"
+              : "Don't have account? Please Sing Up first."}
+          </a>
         </Fragment>
       </div>
       <Box mt={8}>{/* <Copyright /> */}</Box>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            {message_of_sucess}
-          </Alert>
+        <Alert onClose={handleClose} severity="success">
+          {message_of_sucess}
+        </Alert>
       </Snackbar>
     </Container>
   );
