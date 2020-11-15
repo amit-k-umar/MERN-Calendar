@@ -1,4 +1,5 @@
 const express= require('express');
+var cors = require('cors')
 const mongoose= require('mongoose');
 const authRoutes=require('./routes/authRoutes');
 const eventRoutes=require('./routes/eventRoutes')
@@ -15,6 +16,7 @@ const app=express();
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 
 //database conection

@@ -124,7 +124,7 @@ export default function SignIn() {
     setPasswordError(false)
    
     
-    await fetch('/signup',
+    await fetch('http://localhost:5000/signup',
     {
       method:"post",
       headers:{
@@ -196,10 +196,11 @@ export default function SignIn() {
     setPasswordError(false)
 
     
-    await fetch('/signin',
+    await fetch('http://localhost:5000/signin',
     {
       method:"post",
       headers:{
+          credentials: 'include',
           "Content-Type":"application/json"
       },
       body:JSON.stringify({

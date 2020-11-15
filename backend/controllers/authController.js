@@ -34,7 +34,7 @@ const handelError=(err)=>{
 
 
 //create token
-const maxAge=2*24*60*60;
+const maxAge=30*24*60*60;
 
 const signToken=(id)=>{
   return jwt.sign({id}, process.env.JWT_SECRET,{
@@ -52,7 +52,7 @@ module.exports.signup = async(req, res) => {
     const user= await User.create({email,password,name});
     console.log(user._id)
     const token=await signToken(user._id)
-    res.cookie('jwtCAL', token, {httpOnly: true, maxAge: maxAge * 1000 });
+    await res.cookie('jwtCAL', token, {httpOnly: true, maxAge: maxAge * 1000 });
     user.password=undefined;
     res.status(201).json(user);
   }catch(err){
@@ -69,7 +69,7 @@ module.exports.login= async (req,res)=>{
     try{
        const user=await User.login(email,password);
        const token=await signToken(user._id)
-       res.cookie('jwtCAL', token, { httpOnly: true, maxAge: maxAge * 1000 });
+       await res.cookie('jwtCAL', token, { httpOnly: true, maxAge: maxAge * 1000 });
 
        res.status(201).json(user)
     }catch(err){

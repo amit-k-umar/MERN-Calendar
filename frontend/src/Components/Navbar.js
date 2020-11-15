@@ -4,6 +4,8 @@ import Signup from "./Register";
 import "../CSS/Navbar.css";
 import logo from "../Images/logo192.png";
 import Sidenav from "./Sidenav";
+import {useHistory} from 'react-router-dom'
+
 
 const createScheduledNotification = async (tag, title, timestamp) => {
   const registration = await navigator.serviceWorker.getRegistration();
@@ -63,7 +65,31 @@ function showNotification(e) {
 //   });
 // };
 
+
+
 function Navbar() {
+  const history = useHistory();
+  async function  handelLogout (e) {
+  
+     fetch('http://localhost:5000/logout',
+        {
+              method:"get",
+              headers:{
+              credentials: 'include',
+              "Content-Type":"application/json"
+              },
+           
+          }).then(
+            async data=>{
+               localStorage.removeItem("user");
+              return history.push('/landing')
+  
+                  })
+              
+                }
+
+  // const handelLogout= async(e)=>(
+   
   return (
     <div className="nav">
       <div className="nav-left">
@@ -71,7 +97,8 @@ function Navbar() {
       </div>
         <Sidenav />
       <div className="nav-right">
-        <Login />
+      <button onClick={handelLogout}>Logout</button>
+        {/* <Login /> */}
         {/* <Signup/> */}
         {/* <button onClick={showNotification}>hellp</button> */}
       </div>
